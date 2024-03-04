@@ -1,0 +1,692 @@
+
+import Patelb61.A3CardSwipeGame
+import Wangq198.Connect
+import Wangq198.Test30
+import Dongw17.L03TITLE
+import Xiek30.Leafproject
+
+myShapes : Model -> List (Shape Msg)
+myShapes model =
+    case model.state of
+        
+        CleanUpTask ->
+            [ Xiek30.Leafproject.myShapes model.leafModel
+              |> group
+              |> GraphicSVG.map LeafMsg
+            , group
+                  [    
+                       roundedRect 40 20 5
+                            |> filled green
+                  ,    text "ToReactor"
+                            |> centered
+                            |> size 8
+                            |> filled black
+                            |> move(0, -3)
+                 
+                  ]
+                     |> move (0, -25)
+                     |> notifyTap ToReactor
+            ]        
+        WiresTask ->
+            [ Wangq198.Connect.myShapes model.wireModel
+                   |> group
+                   |> GraphicSVG.map WireMsg
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                  ,    text "ToElectrical"
+                            |> centered
+                            |> size 6
+                            |> filled black
+                            |> move(0, -3)
+                   ]
+                     |> move (-30, 45)
+                     |> notifyTap ToElectrical
+            ]         
+        CardSwipeTask -> 
+            [ Patelb61.A3CardSwipeGame.myShapes model.cardModel
+              |> group
+              |> GraphicSVG.map CardMsg
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                  ,    text "ToAdmin"
+                            |> centered
+                            |> size 8
+                            |> filled black
+                            |> move(0, -3)
+                  ]
+                     |> move (-75, 50)
+                     |> notifyTap ToAdmin
+            ]
+        PasswordTask -> 
+            [ Wangq198.Test30.myShapes model.passwordModel
+              |> group 
+              |> GraphicSVG.map PasswordMsg
+              ,group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                  ,    text "ToSecurity"
+                            |> centered
+                            |> size 8
+                            |> filled black
+                            |> move(0, -3)
+                  ]
+                     |> move (55, -55)
+                     |> notifyTap ToSecurity
+            ]
+        Start  ->
+            [ Dongw17.L03TITLE.myShapes model.startModel
+              |> group
+              |> GraphicSVG.map StartMsg
+            , group
+                  [   
+                       roundedRect 40 20 5
+                            |> filled green
+                  ,    text "Start"
+                            |> centered
+                            |> size 8
+                            |> filled black
+                            |> move(0, -3)
+                   
+                  ]
+                     |> move (0, -25)
+                     |> notifyTap ToCafeteria
+            ]
+        Cafeteria  ->
+            [cafe,
+            
+                    
+            
+            group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> makeTransparent 0
+                  
+                  ]
+                     |> move (0, -55)
+                     |> notifyTap ToMedbay
+            , group
+                  [
+                       roundedRect 20 50 5
+                            |> filled green
+                            |> makeTransparent 0
+                  ]
+                     |> move(-80, 0)
+                     |> notifyTap ToUpperEngine
+            ]
+        Medbay  ->
+            [ medbay,
+          
+              group
+                  [
+                       roundedRect 20 80 5
+                            |> filled green
+                            |> makeTransparent 0
+           
+                  ]
+                     |> move (-80, 0)
+                     |> notifyTap ToUpperEngine
+            ]
+        UpperEngine  ->
+            [ upperengine
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> makeTransparent 0
+          
+                  ]
+                     |> move (-75, 10)
+                     |> notifyTap ToReactor
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> makeTransparent 0
+                  ]
+                     |> move (75, 10)
+                     |> notifyTap ToSecurity
+            , group
+                  [
+                       roundedRect 80 20 5
+                            |> filled green 
+                            |> makeTransparent 0
+                  ]
+                     |> move (0, -40)
+                     |> notifyTap ToLowerEngine
+            ]
+        Reactor  ->
+            [ reactor
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> makeTransparent 0
+
+                  ]
+                     |> move (80, 5)
+                     |> notifyTap ToSecurity
+            , group
+                  [
+                       roundedRect 80 20 5
+                            |> filled green
+                            |> makeTransparent 0
+                  ]
+                     |> move (0, -35)
+                     |> notifyTap ToLowerEngine
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                  ,    text "ToCleanUpTask"
+                            |> centered
+                            |> size 6
+                            |> filled black
+                            |> move(0, -3)
+                  ]
+                     |> scale 0.8
+                     |> move (-75, 20)
+                     |> notifyTap ToCleanUpTask
+            ]
+        Security  ->
+            [ security
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> makeTransparent 0
+ 
+                  ]
+                     |> move (-75, 10)
+                     |> notifyTap ToReactor
+            , group
+                  [
+                       roundedRect 80 20 5
+                            |> filled green
+                            |> makeTransparent 0
+                  ]
+                     |> move (0, -35)
+                     |> notifyTap ToLowerEngine
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> move(120, 0)
+                  ,    text "ToPasswordTask"
+                            |> centered
+                            |> size 6
+                            |> filled black
+                            |> move(120, -3)
+                  ]
+                     |> move (-22, 25)
+                     |> scale 0.8
+                     |> notifyTap ToPasswordTask
+            ]
+        LowerEngine  ->
+            [lowerengine
+            , group
+                  [
+                       roundedRect 60 20 5
+                            |> filled green
+                            |> makeTransparent 0
+                  ]
+                     |> move (0, -35)
+                     |> notifyTap ToElectrical
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> makeTransparent 0
+
+                  ]
+                     |> move (70, 35)
+                     |> notifyTap ToStorage
+            ]
+        Electrical  ->
+            [ electrical
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                            |> makeTransparent 0
+     
+                  ]
+                     |> move (70, 30)
+                     |> notifyTap ToStorage
+            , group
+                  [
+                       roundedRect 40 20 5
+                            |> filled green
+                  ,    text "ToWiresTask"
+                            |> centered
+                            |> size 7
+                            |> filled black
+                            |> move(0, -3)
+                  ]
+                     |> move (25, -25)
+                     |> notifyTap ToWiresTask
+            ]
+        Storage  ->
+            [ storage
+            , group
+                  [
+                       roundedRect 70 20 5
+                            |> filled green
+                            |> makeTransparent 0
+                            
+                  ]
+                     |> move (0, 50)
+                     |> notifyTap ToCafeteria
+            , group
+                  [
+                       roundedRect 20 40 5
+                            |> filled green
+                            |> makeTransparent 0
+
+                  ]
+                     |> move (75, 0)
+                     |> notifyTap ToAdmin
+            ]
+        Admin  ->
+            [ admin
+            , group
+                  [
+                       roundedRect 80 20 5
+                            |> filled green
+                            |> makeTransparent 0
+                  ]
+                     |> move (0, 50)
+                     |> notifyTap ToCafeteria
+            , group
+                  [
+                       roundedRect 80 20 5
+                            |> filled green
+                  ,    text "ToCardSwipeTask"
+                            |> centered
+                            |> size 8
+                            |> filled black
+                            |> move(0, -3)
+                  ]
+                     |> move (25, -25)
+                     |> notifyTap ToCardSwipeTask
+            ]
+
+type Msg = Tick Float GetKeyState
+         | ToCafeteria 
+         | ToMedbay 
+         | ToUpperEngine 
+         | ToReactor 
+         | ToSecurity 
+         | ToLowerEngine 
+         | ToElectrical 
+         | ToStorage 
+         | ToAdmin 
+         | ToCardSwipeTask
+         | ToCleanUpTask
+         | ToWiresTask
+         | ToPasswordTask
+         | CardMsg Patelb61.A3CardSwipeGame.Msg
+         | WireMsg Wangq198.Connect.Msg
+         | PasswordMsg Wangq198.Test30.Msg
+         | StartMsg Dongw17.L03TITLE.Msg
+         | LeafMsg Xiek30.Leafproject.Msg
+
+type State = Start 
+           | Cafeteria 
+           | Medbay 
+           | UpperEngine 
+           | Reactor 
+           | Security 
+           | LowerEngine 
+           | Electrical 
+           | Storage 
+           | Admin 
+           | CardSwipeTask
+           | CleanUpTask
+           | WiresTask
+           | PasswordTask
+
+update : Msg -> Model -> Model
+update msg model =
+    case msg of
+        Tick t k ->
+          {model | time = t, leafModel = Xiek30.Leafproject.update (Xiek30.Leafproject.Tick model.time k) model.leafModel,
+                    passwordModel = Wangq198.Test30.update (Wangq198.Test30.Tick model.time k) model.passwordModel,
+                    startModel = Dongw17.L03TITLE.update (Dongw17.L03TITLE.Tick model.time k) model.startModel}
+            
+        CardMsg cardMsg ->
+          { model | cardModel = Patelb61.A3CardSwipeGame.update cardMsg
+                                                                model.cardModel}
+        WireMsg wireMsg ->
+          { model | wireModel = Wangq198.Connect.update wireMsg
+                                                        model.wireModel}
+        PasswordMsg passwordMsg ->
+          { model | passwordModel = Wangq198.Test30.update passwordMsg
+                                                           model.passwordModel}
+        StartMsg startMsg ->
+          { model | startModel = Dongw17.L03TITLE.update startMsg
+                                                         model.startModel}
+        LeafMsg leafMsg->
+          { model | leafModel = Xiek30.Leafproject.update leafMsg
+                                                          model.leafModel}
+        ToCardSwipeTask ->
+            case model.state of
+                Admin ->
+                    { model | state = CardSwipeTask }
+                otherwise ->
+                    model
+        ToCleanUpTask ->
+            case model.state of
+                Reactor ->
+                    { model | state = CleanUpTask }
+                otherwise ->
+                    model
+        ToWiresTask ->
+             case model.state of
+                 Electrical ->
+                     { model | state = WiresTask }
+                 otherwise ->
+                     model
+        ToPasswordTask ->
+             case model.state of
+                 Security ->
+                     { model | state = PasswordTask }
+                 otherwise ->
+                     model
+        ToCafeteria  ->
+            case model.state of
+                Start  ->
+                    { model | state = Cafeteria  }
+
+                Storage  ->
+                    { model | state = Cafeteria  }
+
+                Admin  ->
+                    { model | state = Cafeteria  }
+
+                otherwise ->
+                    model
+        ToMedbay  ->
+            case model.state of
+                Cafeteria  ->
+                    { model | state = Medbay  }
+
+                otherwise ->
+                    model
+        ToUpperEngine  ->
+            case model.state of
+                Cafeteria  ->
+                    { model | state = UpperEngine  }
+
+                Medbay  ->
+                    { model | state = UpperEngine  }
+
+                otherwise ->
+                    model
+        ToReactor  ->
+            case model.state of
+                UpperEngine  ->
+                    { model | state = Reactor  }
+
+                Security  ->
+                    { model | state = Reactor  }
+                
+                CleanUpTask ->
+                    { model | state = Reactor }
+                
+                otherwise ->
+                    model
+        ToSecurity  ->
+            case model.state of
+                UpperEngine  ->
+                    { model | state = Security  }
+
+                Reactor  ->
+                    { model | state = Security  }
+                
+                PasswordTask ->
+                    { model | state = Reactor }
+
+                otherwise ->
+                    model
+        ToLowerEngine  ->
+            case model.state of
+                UpperEngine  ->
+                    { model | state = LowerEngine  }
+
+                Reactor  ->
+                    { model | state = LowerEngine  }
+
+                Security  ->
+                    { model | state = LowerEngine  }
+
+                otherwise ->
+                    model
+        ToElectrical  ->
+            case model.state of
+                LowerEngine  ->
+                    { model | state = Electrical  }
+                
+                WiresTask ->
+                    { model | state = Electrical }
+                
+                otherwise ->
+                    model
+        ToStorage  ->
+            case model.state of
+                LowerEngine  ->
+                    { model | state = Storage  }
+
+                Electrical  ->
+                    { model | state = Storage  }
+
+                otherwise ->
+                    model
+        ToAdmin  ->
+            case model.state of
+                Storage  ->
+                    { model | state = Admin  }
+                
+                CardSwipeTask ->
+                    { model | state = Admin } 
+                
+                otherwise ->
+                    model
+        
+type alias Model =
+    { time : Float
+    , state : State
+    , cardModel : Patelb61.A3CardSwipeGame.Model
+    , wireModel : Wangq198.Connect.Model
+    , passwordModel : Wangq198.Test30.Model
+    , startModel : Dongw17.L03TITLE.Model
+    , leafModel : Xiek30.Leafproject.Model
+    }
+upperengine = group
+  [rect 192 128 |> filled black,
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> filled blue,
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239) ,
+   text"Upperengine"|> filled white|>move (-30,35),
+   rect 50 60 |> filled blue |> move(80,0),
+   rect 45 55 |>  filled (rgb 120 153 239) |> move(80,0),
+   text"Security"|> filled white|>move (85,10)|> scale 0.7,
+   text"room"|> filled white|>move (95,-10)|> scale 0.7,
+   rect 50 60 |> filled blue |> move(-80,0),
+   rect 45 55 |>  filled (rgb 120 153 239) |> move(-80,0),
+   text"Reactor"|> filled white|>move (-130,10)|> scale 0.7,
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> filled blue |> scale -1,
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239)|> scale -1,
+   text"Lowerengine"|> filled white|>move (-30,-40),
+   rect 114 10|> outlined (solid 3) grey,
+   rect 10 44|> outlined (solid 3) grey,
+   rect 7 40|> filled black,
+   rect 110 7|>filled black,
+   circle 5 |> filled red |> move (30,30)]
+reactor =group
+  [rect 192 120 |> filled black,
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> outlined (dotted 4) blue,
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239) ,
+   text"Upperengine"|> filled white|>move (-30,35),
+   rect 50 60 |> filled blue |> move(80,0),
+   rect 45 55 |>  filled (rgb 120 153 239) |> move(80,0),
+   text"Security"|> filled white|>move (85,10)|> scale 0.7,
+   text"room"|> filled white|>move (95,-10)|> scale 0.7,
+   rect 50 60 |> filled blue |> move(-80,0),
+   rect 45 55 |>  filled (rgb 120 153 239) |> move(-80,0),
+   text"Reactor"|> filled white|>move (-130,10)|> scale 0.7,
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> filled blue |> scale -1,
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239)|> scale -1,
+   text"Lowerengine"|> filled white|>move (-30,-40),
+   rect 114 10|> outlined (solid 3) grey,
+   rect 10 44|> outlined (solid 3) grey,
+   rect 7 40|> filled black,
+   rect 110 7|>filled black,
+   circle 5 |> filled red |> move (-80,-20)]
+
+security =group
+  [rect 192 120 |> filled black,
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> outlined (dotted 4) blue ,
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239) ,
+   text"Upperengine"|> filled white|>move (-30,35),
+   rect 50 60 |> filled blue |> move(80,0),
+   rect 45 55 |>  filled (rgb 120 153 239) |> move(80,0),
+   text"Security"|> filled white|>move (85,10)|> scale 0.7,
+   text"room"|> filled white|>move (95,-10)|> scale 0.7,
+   rect 50 58 |> filled blue |> move(-80,0),
+   rect 45 55 |>  filled (rgb 120 153 239) |> move(-80,0),
+   text"Reactor"|> filled white|>move (-130,10)|> scale 0.7,
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> filled blue |> scale -1,
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239)|> scale -1,
+   text"Lowerengine"|> filled white|>move (-30,-40),
+   rect 114 10|> outlined (solid 3) grey,
+   rect 10 44|> outlined (solid 3) grey,
+   rect 7 40|> filled black,
+   rect 110 7|>filled black,
+   circle 5 |> filled red |> move (70,-20)]
+cafe = group[
+   rect 192 128 |> filled black,
+   circle 50 |> filled grey|> move (0,60),
+   circle 45 |> filled (hsl (degrees 0) 0.009 0.474)|> move (0,60),
+   text"Cafeteria"|> filled white|>move (-30,40),
+   circle 5 |> filled red |> move (10,25),
+   rect 10 35|> outlined (solid 3) grey|> move (0,-5),
+   triangle 40|> filled gray|>rotate(degrees -30)|>move(0,-50),
+   triangle 30|> filled (hsl (degrees 0) 0.009 0.474) |>rotate(degrees -30)|>move(0,-50),
+   rect 7 26|>filled black |> move (0,-5),
+   text"Medbay"|> filled white|>move (-17,-60),
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> filled blue|>rotate(degrees 90)|>move(-40,0),
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239)|>rotate(degrees 90)|>move(-40,0), 
+   text"Upperengine"|> filled white|> rotate (degrees -90)|>move (-85,35),
+   rect 55 10|> outlined (solid 3) grey|> move (-35,0),
+   rect 62 7|>filled black |> move (-30,0)
+   ]
+medbay = group[
+   rect 192 128 |> filled black,
+   circle 50 |> outlined (dotted 4)gray|> move (0,63),
+   circle 45 |> filled (hsl (degrees 0) 0.009 0.474)|> move (0,60),
+   text"Cafeteria"|> filled white|>move (-30,40),
+   rect 10 35|> outlined (solid 3) grey|> move (0,-5),
+   triangle 60|> filled gray|>rotate(degrees -30)|>move(0,-60),
+   triangle 40|> filled (hsl (degrees 0) 0.009 0.474) |>rotate(degrees -30)|>move(0,-50),
+   rect 7 26|>filled black |> move (0,-5),
+   text"Medbay"|> filled white|>move (-17,-60),
+   polygon [(-50,60),(50,60),(40,20),(-40,20)]|> filled blue|>rotate(degrees 90)|>move(-40,0),
+   polygon [(-45,55),(45,55),(35,24),(-35,24)]|> filled (rgb 120 153 239)|>rotate(degrees 90)|>move(-40,0), 
+   text"Upperengine"|> filled white|> rotate (degrees -90)|>move (-85,35),
+   rect 55 10|> outlined (solid 3) grey|> move (-35,0),
+   rect 62 7|>filled black |> move (-30,0),
+   circle 5 |> filled red |> move (8,-45)
+   ]
+lowerengine=group[
+   rect 192 128 |> filled black,
+   rect 100 10|> outlined (solid 3) grey|> move (0,35),
+   rect 100 7|> filled (black)|> move (0,35),
+   ngon 6 30|> filled blue |> move (-65,35),
+   ngon 6 27|> filled (rgb 120 153 239) |> move (-65,35),
+   text"Lowerengine"|> filled white|> scale 0.7 |>move (-87,33),
+   roundedRect 50 60 8|> filled(rgb 29 123 170)|>move(70,30),
+   roundedRect 45 55 8|> filled (rgb 129 180 170) |>move(70,30),
+   text"Storage"|> filled white|> scale(0.8)|> move(55,30),
+   rect 10 60|> outlined (solid 3) grey|> move (0,0),
+   rect 7 70|> filled (black)|> move (0,0),
+   oval 100 30  |> filled (hsl (degrees 281) 0.179 0.667)|>move(0,-40),
+   oval 90 25  |>  filled (hsl (degrees 281) 0.213 0.537)|>move(0,-40),
+   text"Electrical"|> filled white|> scale(0.8)|> move(-20,-45),
+   circle 5 |> filled red |> move (-60,25)
+   ]
+electrical=group[
+   rect 192 128 |> filled black,
+   rect 100 10|> outlined (solid 3) grey|> move (0,35),
+   rect 100 7|> filled (black)|> move (0,35),
+   ngon 6 30|>outlined (dotted 4) blue |> move (-65,35),
+   ngon 6 27|> filled (rgb 120 153 239) |> move (-65,35),
+   text"Lowerengine"|> filled white|> scale 0.7 |>move (-87,33),
+   roundedRect 50 60 8|> filled(rgb 29 123 170)|>move(70,30),
+   roundedRect 45 55 8|> filled (rgb 129 180 170) |>move(70,30),
+   text"Storage"|> filled white|> scale(0.8)|> move(55,30),
+   rect 10 60|> outlined (solid 3) grey|> move (0,0),
+   rect 7 70|> filled (black)|> move (0,0),
+   oval 100 50  |> filled (hsl (degrees 281) 0.179 0.667)|>move(0,-40),
+   oval 90 45  |>  filled (hsl (degrees 281) 0.213 0.537)|>move(0,-40),
+   text"Electrical"|> filled white|> scale(0.8)|> move(-20,-45),
+   circle 5 |> filled red |> move (-35,-45)
+   ]
+storage= group[
+   rect 192 128 |> filled black,
+   rect 190 10|> outlined (solid 3) grey|> move (-35,0),
+   rect 10 15|> outlined (solid 3) grey|> move (0,6),
+   rect 7 10|> filled black|> move (0,6),
+   rect 192 7|>filled black |> move (-30,0),
+   circle 50 |>filled grey|> move (0,63),
+   circle 45 |>filled (hsl (degrees 0) 0.009 0.474)|> move (0,60),
+   text"Cafeteria"|> filled white|>move (-30,40),
+   roundedRect 50 60 8|> filled(rgb 29 123 170)|>move(-80,0),
+   roundedRect 45 55 8|> filled (rgb 129 180 170)|>move(-80,0), 
+   text"Storage"|> filled white|> rotate (degrees -90)|>move (-85,20),
+   wedge 35 0.5|> filled (hsl (degrees 55) 0.507 0.57)|>move(60,0),
+   wedge 30 0.5|> filled (hsl (degrees 55) 0.762 0.565)|>move(60,0),
+   text"Admin"|> filled white|> rotate (degrees 90)|>move (80,-15),
+   circle 5 |> filled red |> move (-70,15)
+   ]
+admin= group[
+   rect 192 128 |> filled black,
+   rect 190 10|> outlined (solid 3) grey|> move (-35,0),
+   rect 10 15|> outlined (solid 3) grey|> move (0,6),
+   rect 7 10|> filled black|> move (0,6),
+   rect 192 7|>filled black |> move (-30,0),
+   circle 50 |>filled grey|> move (0,63),
+   circle 45 |>filled (hsl (degrees 0) 0.009 0.474)|> move (0,60),
+   text"Cafeteria"|> filled white|>move (-30,40),
+   roundedRect 50 60 8|> outlined (dotted 3)(rgb 29 123 170)|>move(-80,0),
+   roundedRect 45 55 8|> filled (rgb 129 180 170)|>move(-80,0), 
+   text"Storage"|> filled white|> rotate (degrees -90)|>move (-85,20),
+   wedge 35 0.5|> filled (hsl (degrees 55) 0.507 0.57)|>move(60,0),
+   wedge 30 0.5|> filled (hsl (degrees 55) 0.762 0.565)|>move(60,0),
+   text"Admin"|> filled white|> rotate (degrees 90)|>move (80,-15),
+   circle 5 |> filled red |> move (70,15)
+   ]
+type alias Point = (Float, Float)
+
+init : Model
+init = { time = 0 
+       , state = Start
+       , cardModel = Patelb61.A3CardSwipeGame.init
+       , wireModel = Wangq198.Connect.init
+       , passwordModel = Wangq198.Test30.init
+       , startModel = Dongw17.L03TITLE.init
+       , leafModel = Xiek30.Leafproject.init
+       }
+    
+    
+
+main = gameApp Tick { model = init, view = view, update = update, title = "Game Slot" }
+
+view model = collage 192 128 (myShapes model)
+
+
+
